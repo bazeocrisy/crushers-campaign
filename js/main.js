@@ -127,6 +127,18 @@
     });
   }
 
+  /* ---- Footer contact button: assemble mailto in JS so scrapers can't read it ---- */
+  var emailBtn = document.getElementById("footer-email");
+  if (emailBtn) {
+    var user = "bazeocrisy";
+    var domain = "yahoo.com";
+    var subject = encodeURIComponent("GA Elite Crushers sponsorship question");
+    emailBtn.setAttribute(
+      "href",
+      "mailto:" + user + "@" + domain + "?subject=" + subject
+    );
+  }
+
   /* ---- Footer year ---- */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
