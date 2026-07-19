@@ -54,7 +54,7 @@
     }
 
     form.addEventListener("submit", function (e) {
-      e.preventDefault(); // never actually submits — this is a mock
+      e.preventDefault();
       var valid = true;
       var required = form.querySelectorAll("[required]");
       required.forEach(function (field) {
@@ -73,12 +73,51 @@
         status.textContent = "Please complete the highlighted required fields so the campaign team can follow up.";
         return;
       }
-      // Transparent mock behavior — clearly NOT a live submission
+
+      // Set reply-to so email replies reach the submitter
+      var emailField = form.querySelector("#email");
+      var replyto = form.querySelector("#replyto-mirror");
+      if (emailField && replyto) replyto.value = emailField.value.trim();
+
+      // Submit to Formspree via fetch so the visitor stays on the page
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalLabel = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Sending…"; }
       status.className = "form-status show";
-      status.innerHTML =
-        "<strong>Mock form — not submitted.</strong> Submission routing is pending leadership approval, " +
-        "so no message was sent and no data was stored. Once the campaign is approved, this form will connect " +
-        "to an approved contact channel.";
+      status.textContent = "Sending your information…";
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      })
+        .then(function (response) {
+          if (response.ok) {
+            form.reset();
+            status.className = "form-status show";
+            status.innerHTML =
+              "<strong>Thank you.</strong> Your information has been sent to the campaign team, " +
+              "and someone will follow up with you. No payment or commitment was made.";
+          } else {
+            return response.json().then(function (data) {
+              var msg = (data && data.errors)
+                ? data.errors.map(function (er) { return er.message; }).join(", ")
+                : "Something went wrong sending your message.";
+              throw new Error(msg);
+            });
+          }
+        })
+        .catch(function (err) {
+          status.className = "form-status show";
+          status.innerHTML =
+            "<strong>Sorry, that didn't send.</strong> " +
+            (err && err.message ? err.message + " " : "") +
+            "Please try again, or email the campaign team directly at " +
+            "<a href=\"mailto:bazeocrisy@yahoo.com\">bazeocrisy@yahoo.com</a>.";
+        })
+        .then(function () {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
+        });
     });
 
     // Clear invalid state as the user corrects a field

@@ -550,7 +550,7 @@
             </div>
           </div>
         </div>
-        <p class="tbc center" style="margin-top:1.2rem;">No live payments are active. All buttons route to the mock interest form for follow-up.</p>
+        <p class="tbc center" style="margin-top:1.2rem;">No live payments are active. All buttons route to the interest form, which sends your details to the campaign team.</p>
       </div>
     </section>
 
@@ -710,40 +710,47 @@
 
         <div class="form-wrap">
           <div>
-            <span class="form-mock-flag">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-              Mock Interest Form — Submission Routing Pending Approval
+            <span class="form-live-flag">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              Interest Form — Sends directly to the campaign team
             </span>
 
-            <form id="interest-form" novalidate>
+            <form id="interest-form" action="https://formspree.io/f/mvzeroja" method="POST" novalidate>
+              <!-- Honeypot: hidden from people, catches bots. Real users leave it blank. -->
+              <div class="hp-field" aria-hidden="true">
+                <label for="company-website">Leave this field blank</label>
+                <input type="text" id="company-website" name="_gotcha" tabindex="-1" autocomplete="off" />
+              </div>
+              <input type="hidden" name="_subject" value="New GA Elite Crushers sponsorship interest" />
               <div class="field-row">
                 <div class="field">
                   <label for="name">Contact name <span class="req" aria-hidden="true">*</span></label>
-                  <input id="name" name="name" type="text" autocomplete="name" required aria-required="true" aria-describedby="name-err" />
+                  <input id="name" name="Contact name" type="text" autocomplete="name" required aria-required="true" aria-describedby="name-err" />
                   <span class="err" id="name-err">Please enter your name.</span>
                 </div>
                 <div class="field">
                   <label for="org">Business or organization</label>
-                  <input id="org" name="org" type="text" autocomplete="organization" />
+                  <input id="org" name="Business or organization" type="text" autocomplete="organization" />
                 </div>
               </div>
 
               <div class="field-row">
                 <div class="field">
                   <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
-                  <input id="email" name="email" type="email" autocomplete="email" required aria-required="true" aria-describedby="email-err" />
+                  <input id="email" name="Email" type="email" autocomplete="email" required aria-required="true" aria-describedby="email-err" data-replyto />
+                  <input type="hidden" name="_replyto" id="replyto-mirror" />
                   <span class="err" id="email-err">Please enter a valid email address.</span>
                 </div>
                 <div class="field">
                   <label for="phone">Phone <span class="tbc">(optional)</span></label>
-                  <input id="phone" name="phone" type="tel" autocomplete="tel" />
+                  <input id="phone" name="Phone" type="tel" autocomplete="tel" />
                 </div>
               </div>
 
               <div class="field-row">
                 <div class="field">
                   <label for="interest">Area of interest <span class="req" aria-hidden="true">*</span></label>
-                  <select id="interest" name="interest" required aria-required="true" aria-describedby="interest-err">
+                  <select id="interest" name="Area of interest" required aria-required="true" aria-describedby="interest-err">
                     <option value="">Select an option…</option>
                     <option>Business sponsorship</option>
                     <option>Community support</option>
@@ -756,7 +763,7 @@
                 </div>
                 <div class="field">
                   <label for="level">Sponsorship level of interest</label>
-                  <select id="level" name="level">
+                  <select id="level" name="Sponsorship level">
                     <option value="">No preference / undecided</option>
                     <option>Base Hit — $250</option>
                     <option>Triple — $500</option>
@@ -769,15 +776,15 @@
 
               <div class="field">
                 <label for="offer">Product or service offered <span class="tbc">(if applicable)</span></label>
-                <input id="offer" name="offer" type="text" />
+                <input id="offer" name="Product or service offered" type="text" />
               </div>
 
               <div class="field">
                 <label for="message">Message</label>
-                <textarea id="message" name="message"></textarea>
+                <textarea id="message" name="Message"></textarea>
               </div>
 
-              <button class="btn" type="submit">Send Interest (Mock)</button>
+              <button class="btn" type="submit">Send Interest</button>
               <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
             </form>
           </div>
@@ -789,7 +796,7 @@
             </div>
             <div class="card">
               <h3>What happens next</h3>
-              <p>Once the concept is approved and launched, the campaign team will connect this form to an approved contact channel and follow up with interested partners.</p>
+              <p>Submitting this form sends your information to the campaign team, who will follow up with interested partners. It does not create any payment or commitment.</p>
             </div>
             <div class="card">
               <h3>Prefer to talk first?</h3>
@@ -827,6 +834,7 @@
         <div class="footer-col">
           <h4>Explore</h4>
           <ul>
+            <li><a href="#top">Home</a></li>
             <li><a href="#who-we-are">Our Story</a></li>
             <li><a href="#where-funds-go">Where Funds Go</a></li>
             <li><a href="#sponsorships">Sponsorships</a></li>
@@ -836,12 +844,32 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Organization</h4>
-          <ul>
-            <li><a href="https://gaelitecrushers.com/" rel="noopener">Main GA Elite Crushers Website</a></li>
-            <li><span class="tbc">Social links: pending approved profiles</span></li>
-            <li><span class="tbc">Contact: To Be Confirmed</span></li>
+          <h4>Follow Us</h4>
+          <ul class="footer-social">
+            <li>
+              <a href="https://www.instagram.com/ga_elitecrushers/" target="_blank" rel="noopener noreferrer" aria-label="Follow GA Elite Crushers on Instagram (opens in a new tab)">
+                <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                <span>Instagram</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.tiktok.com/@gaelitecrushers" target="_blank" rel="noopener noreferrer" aria-label="Follow GA Elite Crushers on TikTok (opens in a new tab)">
+                <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M16.5 3c.3 2.1 1.6 3.8 3.5 4.3v3c-1.3.1-2.6-.2-3.8-.8v5.9c0 3.3-2.7 6-6 6s-6-2.7-6-6 2.7-6 6-6c.3 0 .6 0 .9.1v3.1c-.3-.1-.6-.2-.9-.2-1.6 0-2.9 1.3-2.9 2.9s1.3 3 2.9 3 3-1.3 3-3V3h3.3z"/></svg>
+                <span>TikTok</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61591662416641" target="_blank" rel="noopener noreferrer" aria-label="Follow GA Elite Crushers on Facebook (opens in a new tab)">
+                <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+                <span>Facebook</span>
+              </a>
+            </li>
           </ul>
+          <div class="footer-contact">
+            <p class="footer-contact__q">Questions about sponsorships?</p>
+            <p class="footer-contact__line">Contact the GA Elite Crushers team.</p>
+            <p class="footer-contact__email">Email Coming Soon</p>
+          </div>
         </div>
       </div>
 
@@ -853,7 +881,7 @@
 
       <div class="footer-bottom">
         <span>© <span id="year">2026</span> GA Elite Crushers. All rights reserved.</span>
-        <span>Concept mock — not an active fundraising campaign.</span>
+        <span><a href="https://gaelitecrushers.com/" target="_blank" rel="noopener noreferrer">Main GA Elite Crushers Website</a> · Concept mock — not an active fundraising campaign.</span>
       </div>
     </div>
   </footer>
