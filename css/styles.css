@@ -382,23 +382,52 @@ section[id], div[id].anchor { scroll-margin-top: calc(var(--header-h) + 12px); }
 
 /* ---------- Sponsor packages ---------- */
 .pkg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; align-items: stretch; }
+.pkg-grid--5 { grid-template-columns: repeat(5, 1fr); gap: .9rem; align-items: stretch; }
+@media (max-width: 1200px){ .pkg-grid--5 { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 1000px){ .pkg-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px){ .pkg-grid { grid-template-columns: 1fr; } }
+@media (max-width: 820px){ .pkg-grid--5 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px){ .pkg-grid, .pkg-grid--5 { grid-template-columns: 1fr; } }
 .pkg {
   background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 1.4rem; display: flex; flex-direction: column; box-shadow: var(--shadow); position: relative;
 }
 .pkg--featured { border: 2px solid var(--accent); box-shadow: var(--shadow-lg); }
+/* Premium ($2,500) — clearly elevated but secondary to exclusive */
+.pkg--premium { border: 2px solid var(--accent); box-shadow: var(--shadow-lg); }
+/* Exclusive ($5,000) — most prominent: thicker border, dark header accent, slight scale */
+.pkg--exclusive {
+  border: 3px solid var(--accent-deep); box-shadow: var(--shadow-lg);
+  background: linear-gradient(180deg, var(--accent-tint) 0%, var(--paper) 120px);
+}
+@media (min-width: 821px){
+  .pkg--exclusive { transform: scale(1.03); z-index: 2; }
+}
 .pkg__flag {
   position: absolute; top: -12px; left: 1.2rem; background: var(--accent-deep); color: #fff;
-  font-family: var(--f-display); font-weight: 700; font-size: .68rem; letter-spacing: .08em;
-  text-transform: uppercase; padding: .25rem .6rem; border-radius: 6px;
+  font-family: var(--f-display); font-weight: 700; font-size: .66rem; letter-spacing: .06em;
+  text-transform: uppercase; padding: .28rem .6rem; border-radius: 6px; white-space: nowrap;
 }
-.pkg .tier { font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; }
-.pkg .price { font-family: var(--f-display); font-weight: 800; font-size: 2rem; color: var(--ink); margin: .2rem 0 .1rem; }
-.pkg .price small { font-size: .7rem; color: var(--text-2); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
-.pkg ul { list-style: none; margin: 1rem 0 1.3rem; padding: 0; display: grid; gap: .55rem; }
-.pkg ul li { position: relative; padding-left: 1.5rem; font-size: .9rem; color: var(--text-2); }
+.pkg__flag--exclusive { background: var(--gold); color: #3a2c04; }
+.pkg__label {
+  display: inline-block; font-family: var(--f-display); font-weight: 700; font-size: .66rem;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--accent-deep);
+  background: var(--accent-tint); padding: .22rem .55rem; border-radius: 999px; margin-bottom: .6rem;
+  align-self: flex-start;
+}
+.pkg__label--exclusive { background: var(--accent-deep); color: #fff; }
+.pkg .tier { font-family: var(--f-display); font-weight: 800; font-size: 1.12rem; }
+.pkg--exclusive .tier { font-size: 1.25rem; }
+.pkg .price { font-family: var(--f-display); font-weight: 800; font-size: 1.9rem; color: var(--ink); margin: .2rem 0 .1rem; }
+.pkg--exclusive .price { font-size: 2.2rem; }
+.pkg .price small { font-size: .68rem; color: var(--text-2); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.pkg__desc { font-size: .86rem; color: var(--text-2); margin: .7rem 0 .3rem; }
+.pkg__jersey {
+  font-size: .82rem; color: var(--ink); background: var(--accent-tint);
+  border-left: 3px solid var(--accent); border-radius: 6px; padding: .55rem .7rem; margin: .6rem 0 0;
+}
+.pkg__jersey--primary { border-left-color: var(--accent-deep); font-weight: 500; }
+.pkg ul { list-style: none; margin: 1rem 0 1.3rem; padding: 0; display: grid; gap: .5rem; }
+.pkg ul li { position: relative; padding-left: 1.5rem; font-size: .87rem; color: var(--text-2); }
 .pkg ul li::before {
   content: ""; position: absolute; left: 0; top: .35rem; width: 14px; height: 8px;
   border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
@@ -408,6 +437,28 @@ section[id], div[id].anchor { scroll-margin-top: calc(var(--header-h) + 12px); }
 .pkg--custom { background: var(--ink); color: #fff; border-color: var(--ink); }
 .pkg--custom .tier, .pkg--custom .price { color: #fff; }
 .pkg--custom ul li { color: #c4ccce; }
+
+/* Jersey comparison + disclaimer */
+.jersey-compare {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin: 1.6rem 0 1rem;
+}
+@media (max-width: 620px){ .jersey-compare { grid-template-columns: 1fr; } }
+.jersey-compare__col {
+  background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.2rem;
+}
+.jersey-compare__col--exclusive { border: 2px solid var(--accent-deep); background: var(--accent-tint); }
+.jersey-compare__col h4 { font-size: 1rem; margin-bottom: .6rem; color: var(--ink); }
+.jersey-compare__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; }
+.jersey-compare__col li { position: relative; padding-left: 1.3rem; font-size: .9rem; color: var(--text-2); }
+.jersey-compare__col li::before {
+  content: ""; position: absolute; left: 0; top: .4rem; width: 12px; height: 7px;
+  border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg);
+}
+.jersey-disclaimer {
+  font-size: .8rem; color: var(--text-2); background: var(--paper-2);
+  border: 1px solid var(--line); border-radius: var(--radius-sm); padding: .9rem 1.1rem; line-height: 1.55; margin: 0;
+}
+
 
 /* ---------- Progress mockup ---------- */
 .progress-wrap { max-width: 720px; margin-inline: auto; }
